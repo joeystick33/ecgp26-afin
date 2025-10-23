@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: ofin-backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    networks:
+      - ofin
+
+  frontend:
+    build: ./frontend
+    container_name: ofin-frontend
+    depends_on:
+      - backend
+    environment:
+      # Front app will call /api which nginx proxies to backend
+      - VITE_API_URL=/api
+    ports:
+      - "5173:80"
+    networks:
+      - ofin
+
+networks:
+  ofin:
+    driver: bridge

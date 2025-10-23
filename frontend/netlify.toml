@@ -1,0 +1,25 @@
+[build]
+  # Commande pour construire le frontend
+  command = "npm run build"
+  
+  # Dossier contenant les fichiers compilés
+  publish = "dist"
+  
+  # Variables d'environnement pour la build
+  [build.environment]
+    NODE_VERSION = "18"
+
+# Redirections pour React Router (SPA)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers de sécurité
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
